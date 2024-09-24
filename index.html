@@ -1,43 +1,28 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song-Vorschlag</title>
-</head>
-<body>
-    <h2>Schicke einen Song-Vorschlag</h2>
-    <form id="songForm">
-        <label for="song_name">Song Name:</label><br>
-        <input type="text" id="song_name" name="song_name" required><br><br>
+<script>
+    document.getElementById('songForm').addEventListener('submit', function(e) {
+        e.preventDefault();  // Verhindert das automatische Absenden des Formulars
         
-        <label for="yt_link">YouTube Link:</label><br>
-        <input type="url" id="yt_link" name="yt_link" required><br><br>
-        
-        <input type="submit" value="Absenden">
-    </form>
+        var song_name = document.getElementById('song_name').value;
+        var yt_link = document.getElementById('yt_link').value;
 
-    <script>
-        document.getElementById('songForm').addEventListener('submit', function(e) {
-            e.preventDefault();  // Verhindert das automatische Absenden des Formulars
-            
-            var song_name = document.getElementById('song_name').value;
-            var yt_link = document.getElementById('yt_link').value;
-
-            // Daten an das Google Apps Script senden
-            fetch("https://script.google.com/macros/s/AKfycbyYWa2W7Vt_YNc9DAB4VxdAVR6cAppaZ3mkPud4jSJzh24twk8Pda_gw6FiKVtqRumAvA/exec", {
-                method: "POST",
-                mode: 'no-cors',
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "song_name=" + encodeURIComponent(song_name) + "&yt_link=" + encodeURIComponent(yt_link)
-            }).then(response => {
+        // Daten an das Google Apps Script senden
+        fetch("https://script.google.com/macros/s/AKfycbxGxn6x5kzp8NA9i9LPU-Z69Unw0ItCni1o3j2YHjvMHV6AF-jv07pbcYoXiRapByU50A/exec", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+                'song_name': song_name,
+                'yt_link': yt_link
+            })
+        }).then(response => {
+            if (response.ok) {
                 alert("Dein Vorschlag wurde gespeichert!");
-            }).catch(error => {
-                console.error('Fehler:', error);
-            });
+            } else {
+                alert("Es gab ein Problem beim Speichern.");
+            }
+        }).catch(error => {
+            console.error('Fehler:', error);
         });
-    </script>
-</body>
-</html>
+    });
+</script>
