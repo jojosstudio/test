@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $yt_link = htmlspecialchars($_POST['yt_link']);
     
     // E-Mail Details
-    $to = "deine-email@beispiel.com";  // Ersetze dies mit deiner E-Mail-Adresse
+    $to = "juliensperling79@gmail.com";  // Ersetze dies mit deiner E-Mail-Adresse
     $subject = "Neuer Song Vorschlag";
     $message = "Song Name: " . $song_name . "\nYouTube Link: " . $yt_link;
     $headers = "From: no-reply@deine-domain.com";
